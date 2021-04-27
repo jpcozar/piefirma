@@ -77,4 +77,13 @@ if (isset($_POST['genera_pie'])) {
     $html .='</html>';
 	
 	echo $html;
+} else {
+    if (isset($_SERVER['HTTPS']))
+        if (strtoupper($_SERVER['HTTPS'])=='ON')
+            $protocol='https';
+    $host     = $_SERVER['HTTP_HOST'];
+    $uri      = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+    $extra    = 'index.html';
+    $protocol ='http';
+    header("Location: $protocol://$host$uri/$extra");
 }
