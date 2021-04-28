@@ -12,6 +12,8 @@ Consiste en:
   * Formulario web que toma los datos con los que se va a generar la firma.
 * generar.php
   * Script en PHP que recibe los datos del formulario web anterior y genera un documento HTML con el pie de firma.
+* res/
+  * Archivos de imágenes y hojas de estilo.
 
 ## Referencias
 
