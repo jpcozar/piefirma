@@ -9,59 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="res/formulario.css" type="text/css" media="screen" />
-	<script>
-	function validar () {
-		tel_fijo = document.querySelector('input[name=tel_fijo]');
-		tel_fijo_corp = document.querySelector('input[name=tel_fijo_corp]');
-		tel_movil = document.querySelector('input[name=tel_movil]');
-		tel_movil_corp = document.querySelector('input[name=tel_movil_corp]');
-
-		estado = true;
-
-		if ( tel_fijo.reportValidity() ) {
-			tel_fijo_corp.required = tel_fijo.required;
-			if ( ! tel_fijo_corp.reportValidity() ) {
-				estado = false;
-			}
-		} else {
-			tel_fijo_corp.required = false;
-		}
-
-		if ( tel_movil.reportValidity() ) {
-			tel_movil_corp.required = tel_movil.required;
-			if ( ! tel_movil_corp.reportValidity() ) {
-				estado = false;
-			}
-		} else {
-			tel_movil_corp.required = false;
-		}
-
-		return estado;
-	}
-
-	document.addEventListener('DOMContentLoaded', function () {
-		tel_fijo = document.querySelector('input[name=tel_fijo]');
-		tel_fijo_corp = document.querySelector('input[name=tel_fijo_corp]');
-		tel_movil = document.querySelector('input[name=tel_movil]');
-		tel_movil_corp = document.querySelector('input[name=tel_movil_corp]');
-
-		arr_tel = Array();
-		arr_tel_todos = Array();
-
-		arr_tel.push(tel_fijo);
-		arr_tel.push(tel_movil);
-
-		arr_tel_todos.push(tel_fijo);
-		arr_tel_todos.push(tel_fijo_corp);
-		arr_tel_todos.push(tel_movil);
-		arr_tel_todos.push(tel_movil_corp);
-	
-		const inputListener = function (e) {return arr_tel.filter(function (i) {return i !== e.target;}).forEach(function (i) {return i.required = !e.target.value.length;})};
-
-		arr_tel.forEach(function (i) { return i.addEventListener('input', inputListener);});
-		arr_tel_todos.forEach(function (i) { return i.addEventListener('change', validar);});
-	});
-	</script>
+	<script type="text/javascript" src="validar.js"></script>
+	<script type="text/javascript" src="generar_html.js" defer></script>
 </head>
 <body>
     <table id="banner" style="position: relative; z-index: 20; width:100%">
@@ -89,7 +38,8 @@
             </td>
         </tr>
     </table>
-    <form action="generar.php" method="POST" target="_blank" accept-charset="utf-8" onsubmit = "return validar();">
+    <!-- <form action="generar.php" method="POST" target="_blank" accept-charset="utf-8" onsubmit = "return validar();"> -->
+    <form onsubmit="return downloadFile();">
         <br />
         <fieldset class="center-content">
             <legend><em>Generaci&oacute;n de pie de firma corporativo</em></legend>
@@ -127,13 +77,16 @@
                 <label for="email">Correo electr&oacute;nico</label> <input id="email" name="email" type="text" placeholder="p.e. correo@juntadeandalucia.es" autofocus required type="email" pattern=".+@juntadeandalucia.es" size="75" tabindex="10" /><br />
             </div>
             <br />
-            <i>El fichero generado se llamar&aacute;<strong> piefirma.html</strong></i>
-            <br />
-            <br />
-            <input type="submit" name="genera_pie" value="Generar pie de firma" tabindex="11" />
+            <!-- <input type="submit" name="genera_pie" value="Generar pie de firma" tabindex="11" /> -->
+            <input type="button" name="genera_pie" value="Generar pie de firma" tabindex="11" onclick="downloadFile()"/>
             <input type="reset" name="limpiar" value="Limpiar" tabindex="12" />
-
-            <br /><br />
+            <br />
+            <div id="container" style="display: none;">
+                <br />
+                <i>El fichero generado se llama <div id="output"></div></i>
+                <br />
+            </div>
+            <br />
         </fieldset><br />
     </form>
 </body>
