@@ -76,6 +76,21 @@ VCARD</p>\
 </body>\
 </html>';
 
+// var orig_vcard = "BEGIN:VCARD \
+// VERSION:3.0 \
+// N:_NOMBREAPELLIDOS \
+// FN:_NOMBREAPELLIDOS \
+// TITLE:_CARGO \
+// ORG:_ORG1 \
+// EMAIL;type=pref:_EMAIL \
+// TEL;type=voice,work,pref:+34_TEL \
+// TEL;type=voice,cell,pref:+34_MOV \
+// ADR:_DIRECCION \
+// END:VCARD \
+// ";
+
+var orig_vcard = "BEGIN:VCARD \r\nVERSION:3.0 \r\nN:_NOMBREAPELLIDOS \r\nFN:_NOMBREAPELLIDOS \r\nTITLE:_CARGO \r\nORG:_ORG1 \r\nEMAIL;type=pref:_EMAIL \r\nTEL;type=voice,work,pref:+34_TEL \r\nTEL;type=voice,cell,pref:+34_MOV \r\nADR:_DIRECCION \r\nEND:VCARD \r\n";
+
 var downloadFile = function() {
   window.URL = window.webkitURL || window.URL;
 
@@ -89,29 +104,40 @@ var downloadFile = function() {
   var pie_firma = new Array ( 1 );
   pie_firma[0] = orig_pie_firma;
 
+  var _vcard = orig_vcard;
+
   // Rellenamos con los campos proporcionados
   // FIXME: Validar las entradas para evitar sobreescribir/manipular los campos...
   // FIXME: Comprobar y añadir sólo los que estén definidos
   pie_firma[0] = pie_firma[0].replaceAll ( 'NOMBREAPELLIDOS', document.querySelector('#nombreapellidos').value );
+  _vcard = _vcard.replaceAll ( '_NOMBREAPELLIDOS', document.querySelector('#nombreapellidos').value );
   pie_firma[0] = pie_firma[0].replace ( 'CARGO', document.querySelector('#cargo').value );
+  _vcard = _vcard.replace ( '_CARGO', document.querySelector('#cargo').value );
   pie_firma[0] = pie_firma[0].replace ( 'ORG1', document.querySelector('#organismo1').value );
+  _vcard = _vcard.replace ( '_ORG1', document.querySelector('#organismo1').value );
   pie_firma[0] = pie_firma[0].replace ( 'ORG2', document.querySelector('#organismo2').value );
   pie_firma[0] = pie_firma[0].replace ( 'DIRECCION', document.querySelector('#direccion').value );
+  _vcard = _vcard.replace ( '_DIRECCION', document.querySelector('#direccion').value );
   
   // FIXME: Comprobar y añadir sólo los que estén definidos
   pie_firma[0] = pie_firma[0].replaceAll ( 'TEL_C', document.querySelector('#tel_fijo_corp').value );
   pie_firma[0] = pie_firma[0].replaceAll ( 'TEL', document.querySelector('#tel_fijo').value );
+  _vcard = _vcard.replaceAll ( '_TEL', document.querySelector('#tel_fijo').value );
   
   // FIXME: Comprobar y añadir sólo los que estén definidos
   pie_firma[0] = pie_firma[0].replaceAll ( 'MOV_C', document.querySelector('#tel_movil_corp').value );
   pie_firma[0] = pie_firma[0].replaceAll ( 'MOV', document.querySelector('#tel_movil').value );
+  _vcard = _vcard.replaceAll ( '_MOV', document.querySelector('#tel_movil').value );
   
   // FIXME: Comprobar y añadir sólo si está definido
   pie_firma[0] = pie_firma[0].replaceAll ( 'EMAIL', document.querySelector('#email').value );
+  _vcard = _vcard.replaceAll ( '_EMAIL', document.querySelector('#email').value );
 
-  // TODO: Intentar insertar vCard en forma de enlace
+  // WISH: Intentar insertar vCard en forma de enlace
+//   pie_firma[0] = pie_firma[0].replace ( 'VCARD', '<a download="'+document.querySelector('#nombreapellidos').value+'.vcf" href="data:text/vcard;base64,'+btoa(_vcard)+'">Tarjeta vCard</a>' );
+  // No funciona de forma uniforme en los clientes de correo (webmail, escritorio o apps), por lo que se desactiva por ahora
   pie_firma[0] = pie_firma[0].replace ( 'VCARD', '' );
-  
+
   // Sustituimos IMG_BLOB dentro de pie_firma por _img_blob, que se supone que es la conversión a Base64 de la imagen
   // Esta sustitución debe ser la última, no sea que aparezcan alguna cadena anterior en la imagen convertida (p.e. TEL)
   pie_firma[0] = pie_firma[0].replace ( 'IMG_BLOB', _img_blob );
