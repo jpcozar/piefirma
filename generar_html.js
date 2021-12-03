@@ -43,7 +43,7 @@ var orig_pie_firma = '<!DOCTYPE html>\
 <head>\
 <meta charset="UTF-8"/>\
 <style>a.pie {font-size: 11px;text-decoration: none;color: #3366ff;}</style>\
-<title>Firma de correo corporativo de la Junta de Andaluc&iacute;a</title>\
+<title>NOMBREAPELLIDOS</title>\
 </head>\
 <body>\
 <table width="700" border="0" cellspacing="0" cellpadding="0" style="font-family: Source Sans Pro, sans-serif, Verdana; color: #313B26; line-height: 18px; text-align: left;">\
@@ -67,9 +67,9 @@ T: <a class="pie" href="tel:TEL">TEL</a> (<a class="pie" href="tel:TEL_C">TEL_C<
  | \
 M: <a class="pie" href="tel:MOV">MOV</a> (<a class="pie" href="tel:MOV_C">MOV_C</a>)\
 </span><br/>\
-<a class="pie" href="mailto:EMAIL" >EMAIL</a>&nbsp;|&nbsp;</span>\
+<span><a class="pie" href="mailto:EMAIL" >EMAIL</a>&nbsp;|&nbsp;\
 <a class="pie" href="http://www.juntadeandalucia.es" target="_blank" style="color: #313B26; text-decoration:none;">www.juntadeandalucia.es</a><br/></span>\
-</p>\
+VCARD</p>\
 </td>\
 </tr>\
 </table>\
@@ -92,7 +92,7 @@ var downloadFile = function() {
   // Rellenamos con los campos proporcionados
   // FIXME: Validar las entradas para evitar sobreescribir/manipular los campos...
   // FIXME: Comprobar y añadir sólo los que estén definidos
-  pie_firma[0] = pie_firma[0].replace ( 'NOMBREAPELLIDOS', document.querySelector('#nombreapellidos').value );
+  pie_firma[0] = pie_firma[0].replaceAll ( 'NOMBREAPELLIDOS', document.querySelector('#nombreapellidos').value );
   pie_firma[0] = pie_firma[0].replace ( 'CARGO', document.querySelector('#cargo').value );
   pie_firma[0] = pie_firma[0].replace ( 'ORG1', document.querySelector('#organismo1').value );
   pie_firma[0] = pie_firma[0].replace ( 'ORG2', document.querySelector('#organismo2').value );
@@ -108,6 +108,9 @@ var downloadFile = function() {
   
   // FIXME: Comprobar y añadir sólo si está definido
   pie_firma[0] = pie_firma[0].replaceAll ( 'EMAIL', document.querySelector('#email').value );
+
+  // TODO: Intentar insertar vCard en forma de enlace
+  pie_firma[0] = pie_firma[0].replace ( 'VCARD', '' );
   
   // Sustituimos IMG_BLOB dentro de pie_firma por _img_blob, que se supone que es la conversión a Base64 de la imagen
   // Esta sustitución debe ser la última, no sea que aparezcan alguna cadena anterior en la imagen convertida (p.e. TEL)
