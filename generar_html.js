@@ -68,7 +68,7 @@ T: <a class="pie" href="tel:TEL">TEL</a> (<a class="pie" href="tel:TEL_C">TEL_C<
 M: <a class="pie" href="tel:MOV">MOV</a> (<a class="pie" href="tel:MOV_C">MOV_C</a>)\
 </span><br/>\
 <span><a class="pie" href="mailto:EMAIL" >EMAIL</a>&nbsp;|&nbsp;\
-<a class="pie" href="http://www.juntadeandalucia.es" target="_blank" style="color: #313B26; text-decoration:none;">www.juntadeandalucia.es</a><br/></span>\
+<a class="pie" href="http://www.juntadeandalucia.es" target="_blank" style="color: #313B26; text-decoration:none;">www.juntadeandalucia.es</a></span><br/>\
 VCARD</p>\
 </td>\
 </tr>\
