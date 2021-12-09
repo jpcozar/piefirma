@@ -1,10 +1,11 @@
 function validar () {
-    tel_fijo = document.querySelector('input[name=tel_fijo]');
-    tel_fijo_corp = document.querySelector('input[name=tel_fijo_corp]');
-    tel_movil = document.querySelector('input[name=tel_movil]');
-    tel_movil_corp = document.querySelector('input[name=tel_movil_corp]');
+    var nombre = document.querySelector('input[name=nombreapellidos]');
+    var tel_fijo = document.querySelector('input[name=tel_fijo]');
+    var tel_fijo_corp = document.querySelector('input[name=tel_fijo_corp]');
+    var tel_movil = document.querySelector('input[name=tel_movil]');
+    var tel_movil_corp = document.querySelector('input[name=tel_movil_corp]');
 
-    estado = true;
+    var estado = true;
 
     if ( tel_fijo.reportValidity() ) {
         tel_fijo_corp.required = tel_fijo.required;
@@ -24,17 +25,21 @@ function validar () {
         tel_movil_corp.required = false;
     }
 
+    if ( ! nombre.reportValidity() ) {
+        estado = false;
+    }
+
     return estado;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    tel_fijo = document.querySelector('input[name=tel_fijo]');
-    tel_fijo_corp = document.querySelector('input[name=tel_fijo_corp]');
-    tel_movil = document.querySelector('input[name=tel_movil]');
-    tel_movil_corp = document.querySelector('input[name=tel_movil_corp]');
+    var tel_fijo = document.querySelector('input[name=tel_fijo]');
+    var tel_fijo_corp = document.querySelector('input[name=tel_fijo_corp]');
+    var tel_movil = document.querySelector('input[name=tel_movil]');
+    var tel_movil_corp = document.querySelector('input[name=tel_movil_corp]');
 
-    arr_tel = Array();
-    arr_tel_todos = Array();
+    var arr_tel = Array();
+    var arr_tel_todos = Array();
 
     arr_tel.push(tel_fijo);
     arr_tel.push(tel_movil);

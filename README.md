@@ -10,6 +10,8 @@ Consiste en:
 
 * index.html
   * Formulario web que toma los datos con los que se va a generar la firma.
+* config.js
+  * Script llamado por index.html con los valores por defecto.
 * validar.js
   * Script llamado por index.html para validar los datos del formulario web anterior.
 * generar_html.js

@@ -9,7 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="res/formulario.css" type="text/css" media="screen" />
-	<script type="text/javascript" src="validar.js"></script>
+	<script type="text/javascript" src="config.js" defer></script>
+	<script type="text/javascript" src="validar.js" defer></script>
 	<script type="text/javascript" src="generar_html.js" defer></script>
 </head>
 <body>
@@ -32,7 +33,7 @@
             </td>
             <td rowspan="2" style="text-align: left; width: 50%;">
                 <div class="encabezadoPagina">
-                    <a href="https://hacolxclu.dphaco.ceh.junta-andalucia.es/piefirma/" target="">Generaci&oacute;n de pie de firma corporativo</a>
+                    <a id="home_url" href="../piefirma/" target="_self">Generaci&oacute;n de pie de firma corporativo</a>
                     <br />
                 </div>
             </td>
@@ -78,8 +79,9 @@
             </div>
             <br />
             <!-- <input type="submit" name="genera_pie" value="Generar pie de firma" tabindex="11" /> -->
-            <input type="button" name="genera_pie" value="Generar pie de firma" tabindex="11" onclick="downloadFile()"/>
-            <input type="reset" name="limpiar" value="Limpiar" tabindex="12" />
+            <!-- <input type="button" name="genera_pie" value="Generar pie de firma" tabindex="11" onclick="downloadFile()"/> -->
+            <input type="submit" name="genera_pie" value="Generar pie de firma" tabindex="11" onclick="downloadFile()"/>
+            <input type="reset" name="limpiar" value="Limpiar" tabindex="12" onclick="limpia_firma()"/>
             <br />
             <div id="container" style="display: none;">
                 <br />
