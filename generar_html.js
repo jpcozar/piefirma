@@ -20,14 +20,6 @@ document.body.addEventListener('dragend', function(e) {
   }
 }, false);
 
-document.addEventListener('keydown', function(e) {
-  if (e.keyCode == 27) {  // Esc
-    document.querySelector('details').open = false;
-  } else if (e.shiftKey && e.keyCode == 191) { // shift + ?
-    document.querySelector('details').open = true;
-  }
-}, false);
-
 var cleanUp = function(a) {
   a.textContent = 'pie_firma.html';
   a.dataset.disabled = true;
@@ -69,29 +61,19 @@ M: <a class="pie" href="tel:MOV">MOV</a> (<a class="pie" href="tel:MOV_C">MOV_C<
 </span><br/>\
 <span><a class="pie" href="mailto:EMAIL" >EMAIL</a>&nbsp;|&nbsp;\
 <a class="pie" href="http://www.juntadeandalucia.es" target="_blank" style="color: #313B26; text-decoration:none;">www.juntadeandalucia.es</a></span><br/>\
-VCARD</p>\
+</p>\
 </td>\
 </tr>\
 </table>\
 </body>\
 </html>';
 
-// var orig_vcard = "BEGIN:VCARD \
-// VERSION:3.0 \
-// N:_NOMBREAPELLIDOS \
-// FN:_NOMBREAPELLIDOS \
-// TITLE:_CARGO \
-// ORG:_ORG1 \
-// EMAIL;type=pref:_EMAIL \
-// TEL;type=voice,work,pref:+34_TEL \
-// TEL;type=voice,cell,pref:+34_MOV \
-// ADR:_DIRECCION \
-// END:VCARD \
-// ";
-
-var orig_vcard = "BEGIN:VCARD \r\nVERSION:3.0 \r\nN:_NOMBREAPELLIDOS \r\nFN:_NOMBREAPELLIDOS \r\nTITLE:_CARGO \r\nORG:_ORG1 \r\nEMAIL;type=pref:_EMAIL \r\nTEL;type=voice,work,pref:+34_TEL \r\nTEL;type=voice,cell,pref:+34_MOV \r\nADR:_DIRECCION \r\nEND:VCARD \r\n";
-
 var downloadFile = function() {
+  // Si el formulario no valida, no continuamos en la generación de la firma
+  if ( ! validar () ) {
+    limpia_firma ();
+    return false;
+  }
   window.URL = window.webkitURL || window.URL;
 
   var prevLink = output.querySelector('a');
@@ -104,39 +86,25 @@ var downloadFile = function() {
   var pie_firma = new Array ( 1 );
   pie_firma[0] = orig_pie_firma;
 
-  var _vcard = orig_vcard;
-
   // Rellenamos con los campos proporcionados
   // FIXME: Validar las entradas para evitar sobreescribir/manipular los campos...
   // FIXME: Comprobar y añadir sólo los que estén definidos
   pie_firma[0] = pie_firma[0].replaceAll ( 'NOMBREAPELLIDOS', document.querySelector('#nombreapellidos').value );
-  _vcard = _vcard.replaceAll ( '_NOMBREAPELLIDOS', document.querySelector('#nombreapellidos').value );
   pie_firma[0] = pie_firma[0].replace ( 'CARGO', document.querySelector('#cargo').value );
-  _vcard = _vcard.replace ( '_CARGO', document.querySelector('#cargo').value );
   pie_firma[0] = pie_firma[0].replace ( 'ORG1', document.querySelector('#organismo1').value );
-  _vcard = _vcard.replace ( '_ORG1', document.querySelector('#organismo1').value );
   pie_firma[0] = pie_firma[0].replace ( 'ORG2', document.querySelector('#organismo2').value );
   pie_firma[0] = pie_firma[0].replace ( 'DIRECCION', document.querySelector('#direccion').value );
-  _vcard = _vcard.replace ( '_DIRECCION', document.querySelector('#direccion').value );
   
   // FIXME: Comprobar y añadir sólo los que estén definidos
   pie_firma[0] = pie_firma[0].replaceAll ( 'TEL_C', document.querySelector('#tel_fijo_corp').value );
   pie_firma[0] = pie_firma[0].replaceAll ( 'TEL', document.querySelector('#tel_fijo').value );
-  _vcard = _vcard.replaceAll ( '_TEL', document.querySelector('#tel_fijo').value );
   
   // FIXME: Comprobar y añadir sólo los que estén definidos
   pie_firma[0] = pie_firma[0].replaceAll ( 'MOV_C', document.querySelector('#tel_movil_corp').value );
   pie_firma[0] = pie_firma[0].replaceAll ( 'MOV', document.querySelector('#tel_movil').value );
-  _vcard = _vcard.replaceAll ( '_MOV', document.querySelector('#tel_movil').value );
   
   // FIXME: Comprobar y añadir sólo si está definido
   pie_firma[0] = pie_firma[0].replaceAll ( 'EMAIL', document.querySelector('#email').value );
-  _vcard = _vcard.replaceAll ( '_EMAIL', document.querySelector('#email').value );
-
-  // WISH: Intentar insertar vCard en forma de enlace
-//   pie_firma[0] = pie_firma[0].replace ( 'VCARD', '<a download="'+document.querySelector('#nombreapellidos').value+'.vcf" href="data:text/vcard;base64,'+btoa(_vcard)+'">Tarjeta vCard</a>' );
-  // No funciona de forma uniforme en los clientes de correo (webmail, escritorio o apps), por lo que se desactiva por ahora
-  pie_firma[0] = pie_firma[0].replace ( 'VCARD', '' );
 
   // Sustituimos IMG_BLOB dentro de pie_firma por _img_blob, que se supone que es la conversión a Base64 de la imagen
   // Esta sustitución debe ser la última, no sea que aparezcan alguna cadena anterior en la imagen convertida (p.e. TEL)
@@ -199,3 +167,11 @@ toDataURL('res/JdA-logo-email.png', function(dataUrl) {
     _img_blob = dataUrl;
     console.log('Logo in:', _img_blob);
 })
+
+
+function limpia_firma () {
+
+  container.style.display='none';
+  cleanUp(output.querySelector('a'));
+
+}
