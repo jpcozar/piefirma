@@ -6,13 +6,17 @@ Según el [Manual de Identidad Corporativa de la Junta de Andalucía] (pág. 309
 
 Este _aplicativo_ sirve para generar el pie de firma en un documento HTML con el formato descrito.
 
-Consiste en:
+Sólo hace falta un servidor web estático para alojar los archivos del _aplicativo_, puesto que para generar la firma no se necesita ejecutar nada en el servidor (generador en el lado del cliente).
+
+Los archivos HTML de firma que se generan ocupan unos 10KB aproximadamente, llevando el logotipo corporativo embebido (codificado en base64).
+
+El _aplicativo_ consiste en:
 
 - `index.html`
   - Formulario web que toma los datos con los que se va a generar la firma.
 - `config.js`
   - Script llamado por `index.html` con los valores configurables:
-    - `show_header`: `true` para mostrar la cabecera, `false` para ocultarla.
+    - `show_header`: `true` para mostrar la cabecera, `false` para ocultarla (útil oara incrustar en un marco).
     - `home_url`: url a la que apunta el título de la página (en la cabecera).
 - `validar.js`
   - Script llamado por `index.html` para validar los datos del formulario web anterior.
